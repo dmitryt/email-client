@@ -3,7 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import ApolloClient from 'apollo-client';
+import { ApolloModule } from 'angular2-apollo';
+
 import { AppComponent } from './app.component';
+
+// Create the client as outlined above
+const client = new ApolloClient();
 
 @NgModule({
   declarations: [
@@ -12,7 +18,8 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    ApolloModule.withClient(client)
   ],
   providers: [],
   bootstrap: [AppComponent]
