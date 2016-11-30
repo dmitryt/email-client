@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var EmailSchema =  new Schema({
+var Email =  new Schema({
   title: String,
   content: String,
   sender: {
@@ -21,7 +21,7 @@ var EmailSchema =  new Schema({
   }
 });
 
-var UserSchema = new Schema({
+var User = new Schema({
   firstName: String,
   lastName: String,
   email: {
@@ -36,6 +36,6 @@ var UserSchema = new Schema({
 });
 
 export default {
-  Email: mongoose.model('Email', EmailSchema),
-  User: mongoose.model('User', UserSchema)
+  Email,
+  User
 };

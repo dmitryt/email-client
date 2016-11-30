@@ -1,18 +1,26 @@
 'use strict';
 
-import mongoose from 'koa-mongoose';
+import mongoose from 'mongoose';
 
-import models from './models';
+export default async function connectDatabase(config) {
+  return new Promise((resolve, reject) => {
 
-export default function connectDatabase(config) {
-  return mongoose({
-    host: config.host,
-    database: config.dbName,
-    db: {
-      native_parser: true
-    },
-    server: {
-      poolSize: 5
-    }
+    let connection = mongoose.createConnection(config.host || 'localhost', config.dbName);
+    connection.on('connected', () => {
+      console.log('MongoDB connection opened');
+      resolve();
+    });
+
+    connection.on('error', err => {
+      let msg = `MongoDB connection error: ${err}`;
+      console.error(msg);
+      reject(msg);
+    });
+
+    connection.on('disconnected', () => {
+      let msg = 'MongoDB connection disconnected';
+      console.error(msg);
+      reject(msg);
+    });
   });
 }
