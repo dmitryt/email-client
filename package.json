@@ -8,7 +8,7 @@
     "clean": "rm -rf lib && mkdir lib",
     "build": "npm run clean",
     "prestart": "npm run build",
-    "fixtures": "./fixtures.js --ufile=users --efile=emails",
+    "fixtures": "./node_modules/babel-cli/bin/babel-node.js fixtures.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -23,8 +23,7 @@
     "koa-logger": "^1.3.0",
     "koa-mount": "^2.0.0",
     "koa-router": "^7.0.1",
-    "mongoose": "^4.7.0",
-    "mongoose-schema-to-graphql": "^2.4.5"
+    "mongoose": "^4.7.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -35,6 +34,8 @@
     "babel-watch": "^2.0.3",
     "faker": "^3.1.0",
     "minimist": "^1.2.0",
-    "mongoose-fakery": "^0.1.7"
+    "mongoose-fakery": "^0.1.7",
+    "mongoose-fixture-loader": "^1.0.2",
+    "node-mongoose-fixtures": "^0.2.4"
   }
 }

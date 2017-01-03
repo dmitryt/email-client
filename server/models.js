@@ -1,15 +1,19 @@
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
+
 var Schema = mongoose.Schema;
 
-var Email =  new Schema({
+var EmailSchema = new Schema({
   title: String,
   content: String,
   sender: {
-    type: String,
-    required: true
+    email: String,
+    firstName: String,
+    lastName: String
   },
   receivers: [{
     email: String,
+    firstName: String,
+    lastName: String,
     category: String,
     isDeleted: Boolean,
     isImportant: Boolean
@@ -21,9 +25,11 @@ var Email =  new Schema({
   }
 });
 
-var User = new Schema({
+var UserSchema = new Schema({
   firstName: String,
   lastName: String,
+  age: Number,
+  sex: String,
   email: {
     type: String,
     required: true
@@ -36,6 +42,6 @@ var User = new Schema({
 });
 
 export default {
-  Email,
-  User
+  Email: mongoose.model('Email', EmailSchema),
+  User: mongoose.model('User', UserSchema),
 };

@@ -5,28 +5,17 @@ import logger from 'koa-logger';
 import bodyParser from 'koa-bodyparser';
 import mount from 'koa-mount';
 import graphqlHTTP from 'koa-graphql';
-import MTGQL from 'mongoose-schema-to-graphql';
 
-import { User, Email } from './models';
+import schema from './schema';
+// import graffiti from '@risingstack/graffiti';
+// import { getSchema } from '@risingstack/graffiti-mongoose';
 
-function getGraphqlSchema(args = {}) {
-  let config = {
-    name: args.name,
-    description: args.description,
-    class: 'GraphQLObjectType',
-    schema: args.schema,
-    exclude: ['_id']
-  };
-  return MTGQL(config);
-}
-
-export function graphql() {
+function graphql() {
   const startTime = Date.now();
+  const { NODE_ENV } = process.env;
+  let isDev = !NODE_ENV || NODE_ENV === 'development';
   return mount('/graphql', convert(graphqlHTTP({
-    schema: getGraphqlSchema({ schema: User, name: 'user', description: 'User Schema' }),
-    extensions({ document, variables, operationName, result }) {
-      return { runTime: Date.now() - startTime };
-    },
+    schema: schema,
     graphiql: true
   })));
 }
@@ -35,6 +24,6 @@ export default function middleware() {
   return convert.compose(
     logger(),
     bodyParser(),
-    // graphql()
+    graphql()
   );
 }

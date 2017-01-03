@@ -9,20 +9,20 @@ import Koa from 'koa';
 import config from 'config';
 
 import db from './server/db';
-import middlewares, { graphql } from './server/middlewares';
+import middlewares from './server/middlewares';
 
 const app = new Koa();
 const router = new Router();
 const dbConfig = config.get('db');
+const port = config.get('port');
 
 db(dbConfig)
   .then(() => {
-    app.use(graphql());
-    // app.use(middlewares());
-
+    app.use(middlewares());
     app.on('error', err => {
       console.error(err);
     });
-
-    app.listen(3000);
+    app.listen(port, () => {
+      console.log(`Listening on port ${config.get('port')}`);
+    });
   });
